@@ -1,0 +1,41 @@
+package com.assistify.backend.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.Data;
+
+@Entity
+@Table(name = "users")
+@Data
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @JsonIgnore
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private String fullName;
+
+    private String department;
+
+    private String location;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
+    @org.hibernate.annotations.ColumnDefault("1")
+    @Column(nullable = false)
+    private boolean active = true;
+
+    public enum Role {
+        USER, SERVICE_DESK, L1_SUPPORT, L2_SUPPORT, MANAGER, ADMIN
+    }
+}
